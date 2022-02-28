@@ -4,9 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Model\Post;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+
+
+    protected $validation =  [
+        'title' => 'required|max:50',
+        'author' => 'required|max:60',
+        'text' => 'required',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::paginate(10);
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -24,7 +35,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create', ['title' => 'Create New Post']);
     }
 
     /**
@@ -35,7 +46,26 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validationData = $request->validate($this->validation);
+
+        $data = $request->all();
+
+        // $slug = Str::slug($data['title'], '-');
+        // $postPresente = Post::where('slug', $slug)->first();
+
+        // $counter = 0;
+        // while ($postPresente) {
+
+        //     $slug = $slug . '-' . $counter;
+        //     $postPresente = Post::where('slug', $slug)->first();
+        //     $counter++;
+        // }
+
+        $post = new Post();
+        $post->fill($data);
+        $post->save();
+
+        return redirect()->route('admin.posts.show', $post->id);
     }
 
     /**
@@ -44,9 +74,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        dd($post);
     }
 
     /**
