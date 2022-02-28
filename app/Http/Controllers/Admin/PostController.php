@@ -14,6 +14,7 @@ class PostController extends Controller
     protected $validation =  [
         'title' => 'required|max:50',
         'author' => 'required|max:60',
+        'slug' => 'required|max:60',
         'text' => 'required',
     ];
 
@@ -45,25 +46,32 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+
     {
+        // dd($request->all());
+
+
         $validationData = $request->validate($this->validation);
+        // dd($this->validation);
+
 
         $data = $request->all();
 
-        // $slug = Str::slug($data['title'], '-');
-        // $postPresente = Post::where('slug', $slug)->first();
+        $slug = Str::slug($data['title'], '-');
+        $postPresente = Post::where('slug', $slug)->first();
 
-        // $counter = 0;
-        // while ($postPresente) {
+        $counter = 0;
+        while ($postPresente) {
 
-        //     $slug = $slug . '-' . $counter;
-        //     $postPresente = Post::where('slug', $slug)->first();
-        //     $counter++;
-        // }
+            $slug = $slug . '-' . $counter;
+            $postPresente = Post::where('slug', $slug)->first();
+            $counter++;
+        }
 
         $post = new Post();
         $post->fill($data);
         $post->save();
+
 
         return redirect()->route('admin.posts.show', $post->id);
     }
