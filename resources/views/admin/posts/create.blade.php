@@ -32,14 +32,14 @@
             @enderror
         </div>
 
-        <div class="mb-3">
+        {{-- <div class="mb-3">
             <label for="slug" class="form-label">Slug</label>
             <input type="text" class="form-control" id="slug" name="slug">
   
             @error('slug')
               <div class="alert alert-danger">{{ $message }}</div>
             @enderror
-        </div>
+        </div> --}}
 
         
         <div class="mb-3">

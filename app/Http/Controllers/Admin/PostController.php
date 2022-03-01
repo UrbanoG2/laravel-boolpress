@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Post;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -14,7 +15,6 @@ class PostController extends Controller
     protected $validation =  [
         'title' => 'required|max:50',
         'author' => 'required|max:60',
-        'slug' => 'required|max:60',
         'text' => 'required',
     ];
 
@@ -48,14 +48,13 @@ class PostController extends Controller
     public function store(Request $request)
 
     {
-        // dd($request->all());
+        $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
 
+        // dd($request->all()); 
 
         $validationData = $request->validate($this->validation);
         // dd($this->validation);
-
-
-        $data = $request->all();
 
         $slug = Str::slug($data['title'], '-');
         $postPresente = Post::where('slug', $slug)->first();
@@ -70,10 +69,11 @@ class PostController extends Controller
 
         $post = new Post();
         $post->fill($data);
+        $post->slug = $slug;
         $post->save();
 
 
-        return redirect()->route('admin.posts.show', $post->id);
+        return redirect()->route('admin.posts.show', ["post"=>$post]);
     }
 
     /**
@@ -84,7 +84,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        dd($post);
+        $data = ["post"=>$post];
+        return view("admin.posts.show", $data);
     }
 
     /**

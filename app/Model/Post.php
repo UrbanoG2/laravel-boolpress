@@ -11,7 +11,14 @@ class Post extends Model
         "author",
         "text",
         "slug",
+        "user_id",
         "created_at",
         "updated_at"
     ];
+
+    
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
