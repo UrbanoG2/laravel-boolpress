@@ -12,8 +12,14 @@
         </ul>
 
 
-        <div>
-            <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-warning">Edit</a>
+        <div class="buttons d-flex">
+            <div>
+                <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-warning">Edit</a>
+            </div>
+    
+            <div  class="ms-3">
+                <a href="{{ route('admin.posts.index') }}" class="btn btn-warning">See all posts</a>
+            </div>
         </div>
     </div>
 @endsection

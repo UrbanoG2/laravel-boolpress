@@ -136,8 +136,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        if (Auth::user()->id != $post->user_id) {
+            abort('403');
+        }
+
+        $post->delete();
+
+        return redirect()->route('admin.posts.index')->with('status', "Post id $post->id deleted");
     }
 }

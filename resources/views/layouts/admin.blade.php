@@ -45,30 +45,30 @@
                                         Dashboard
                                     </a>
                                 </li>
-                                {{-- <li class="nav-item">
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.categories.index') }}">
                                         <i class="bi bi-files"></i>
                                         All Categories
                                     </a>
-                                </li> --}}
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.posts.index') }}">
                                         <i class="bi bi-files"></i>
                                         All Posts
                                     </a>
                                 </li>
-                                {{-- <li class="nav-item">
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.posts.indexUser') }}">
                                         <i class="bi bi-files"></i>
                                         My Posts
                                     </a>
-                                </li> --}}
-                                <li class="nav-item">
+                                </li>
+                                {{-- <li class="nav-item">
                                     <a class="nav-link" href="#">
                                         <i class="bi bi-folder"></i>
                                         Categories
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </nav>
