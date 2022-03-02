@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Model\Post;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use App\Model\Category;
+
 
 class PostController extends Controller
 {
@@ -29,6 +31,14 @@ class PostController extends Controller
         return view('admin.posts.index', compact('posts'));
     }
 
+    public function indexUser()
+    {
+        $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(20);
+
+        return view('admin.posts.index', ['posts' => $posts]);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -36,7 +46,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create', ['title' => 'Create New Post']);
+        // return view('admin.posts.create', ['title' => 'Create New Post']);
+
+        $categories = Category::all();
+        return view('admin.posts.create', ['categories' => $categories]);
     }
 
     /**
@@ -59,13 +72,13 @@ class PostController extends Controller
         $slug = Str::slug($data['title'], '-');
         $postPresente = Post::where('slug', $slug)->first();
 
-        $counter = 0;
-        while ($postPresente) {
+        // $counter = 0;
+        // while ($postPresente) {
 
-            $slug = $slug . '-' . $counter;
-            $postPresente = Post::where('slug', $slug)->first();
-            $counter++;
-        }
+        //     $slug = $slug . '-' . $counter;
+        //     $postPresente = Post::where('slug', $slug)->first();
+        //     $counter++;
+        // }
 
         $post = new Post();
         $post->fill($data);
@@ -73,7 +86,7 @@ class PostController extends Controller
         $post->save();
 
 
-        return redirect()->route('admin.posts.show', ["post"=>$post]);
+        return redirect()->route('admin.posts.show', $post->slug);
     }
 
     /**
@@ -94,9 +107,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', ['post'=>$post]);
     }
 
     /**
@@ -106,9 +119,15 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $validationData = $request->validate($this->validation);
+        $data = $request->all();
+        $updated = $post->update($data);
+
+        return redirect()
+        ->route('admin.posts.show', ["post"=>$post])
+        ->with('status', "Your edit is completed");
     }
 
     /**

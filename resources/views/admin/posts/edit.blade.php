@@ -4,14 +4,14 @@
 
   <div class="row">
     <div class="col mt-3">
-      <h1>Add new Post</h1>
+      <h1>Edit post</h1>
     </div>
   </div>
   <div class="row mt-3">
     <div class="col">
-        <form action="{{ route('admin.posts.store') }}" method="post">
+        <form action="{{ route('admin.posts.update', $post) }}" method="post">
         @csrf
-        @method('POST')
+        @method('PATCH')
 
         <select class="form-select mb-3" name="category_id">
           {{-- se la categoria scelta dall'utente precedentemente e' 
@@ -66,7 +66,7 @@
 
         
 
-        <input class="btn btn-warning" type="submit" value="Invia">
+        <input class="btn btn-primary" type="submit" value="Save edit">
 
         <a class="btn btn-danger ms-2" href="{{ url()->previous() }}">Go Back</a>
 
