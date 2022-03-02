@@ -43,9 +43,11 @@
                         <tr>
                             <td>{{ $post->id }}</td>
                             <td>{{ $post->title }}</td>
-                            <td>{{ $post->category_id }}</td>
+                            <td>{{ $post->category()->first()->name }}</td>
                             <td>{{ $post->created_at }}</td>
                             <td>{{ $post->updated_at }}</td>
+                            <td>{{ $post->updated_at }}</td>
+
                             <td><a class="btn btn-primary" href="{{ route('admin.posts.show', $post->slug) }}">View</a>
                             </td>
                             <td>

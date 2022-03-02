@@ -5,6 +5,8 @@ use Faker\Generator as Faker;
 use App\Model\Post;
 use Illuminate\Support\Str;
 use App\User;
+use App\Model\Category;
+
 
 
 
@@ -23,6 +25,7 @@ class PostSeeder extends Seeder
             $newPost->author = $faker -> name();
             $newPost->text = $faker -> text();
             $newPost->slug = Str::slug($newPost->title . '-' . $i, '-');
+            $newPost->user_id = Category::inRandomOrder()->first()->id;
             $newPost->user_id = User::inRandomOrder()->first()->id;
             $newPost->save();
         }
