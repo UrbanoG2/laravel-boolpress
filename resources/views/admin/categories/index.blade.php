@@ -35,7 +35,7 @@
                             <td>{{ $category->created_at }}</td>
                             <td>{{ $category->updated_at }}</td>
                             <td><a class="btn btn-primary"
-                                    href="{{ route('admin.categories.show', $category->slug) }}">View</a>
+                                    href="{{ route('admin.categories.show', $category->slug) }}">View all posts</a>
                             </td>
                         </tr>
                     @endforeach

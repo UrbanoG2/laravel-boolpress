@@ -34,7 +34,7 @@
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->created_at }}</td>
                             <td>{{ $post->updated_at }}</td>
-                            <td><a class="btn btn-primary" href="{{ route('admin.posts.show', $post->slug) }}">View</a>
+                            <td><a class="btn btn-primary" href="{{ route('admin.posts.show', $post->slug) }}">View post</a>
                             </td>
                         </tr>
                     @endforeach

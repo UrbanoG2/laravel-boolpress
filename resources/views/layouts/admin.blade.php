@@ -39,6 +39,13 @@
                                         Add Post
                                     </a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.posts.index') }}">
+                                        <i class="bi bi-files"></i>
+                                        All Posts
+                                    </a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link active" aria-current="page" href="{{ route('admin.home') }}">
                                         <i class="bi bi-house"></i>
@@ -51,12 +58,7 @@
                                         All Categories
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.posts.index') }}">
-                                        <i class="bi bi-files"></i>
-                                        All Posts
-                                    </a>
-                                </li>
+                               
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.posts.indexUser') }}">
                                         <i class="bi bi-files"></i>
