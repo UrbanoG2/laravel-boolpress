@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome')->name("guest.index");
 });
 
 Auth::routes();
@@ -25,9 +25,10 @@ Route::middleware("auth")
     -> prefix ("admin")
     -> group (function() {
         Route::get('/', 'HomeController@index')->name('home');
-        Route::get('/categories', 'CategoryController@index')->name('categories.index');
-        Route::get('/categories/{category}', 'CategoryController@show')->name('categories.show');
+        // Route::get('/categories', 'CategoryController@index')->name('categories.index');
+        // Route::get('/categories/{category}', 'CategoryController@show')->name('categories.show');
         Route::get('/myposts', 'PostController@indexUser')->name('posts.indexUser');
+        Route::resource('categories', 'CategoryController');
         Route::resource('posts', 'PostController');
     });
 
