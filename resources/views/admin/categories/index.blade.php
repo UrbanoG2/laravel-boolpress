@@ -40,6 +40,11 @@
                             </td>
 
                             <td>
+                                <a class="btn btn-warning"
+                                    href="{{ route('admin.categories.create', $category->slug) }}">Create new category</a>
+                            </td>
+
+                            <td>
                                 <form action="{{ route('admin.categories.destroy', $category) }}" method="post">
                                     @csrf
                                     @method('DELETE')

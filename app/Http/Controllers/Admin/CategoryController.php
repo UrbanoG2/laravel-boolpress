@@ -6,11 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Category;
 use App\Model\Post;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+
 
 
 
 class CategoryController extends Controller
 {
+
+
+    protected $validation =  [
+        'name' => 'required|max:50',
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +38,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('admin.categories.create', ['categories' => $categories]);
     }
 
     /**
@@ -41,7 +50,30 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
+
+        $validationData = $request->validate($this->validation);
+        
+
+        $slug = Str::slug($data['name'], '-');
+        $categorySlug = Category::where('slug', $slug)->first();
+
+        $counter = 0;
+        while ($categorySlug) {
+
+            $slug = $slug . '-' . $counter;
+            $categorySlug = Post::where('slug', $slug)->first();
+            $counter++;
+        }
+
+        $newCategory = new Category();
+        $newCategory->fill($data);
+        $newCategory->slug = $slug;
+        $newCategory->save();
+
+
+        return redirect()->route('admin.categories.index', $newCategory->slug);
     }
 
     /**
@@ -52,6 +84,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+
         return view('admin.categories.show', ['category' => $category]);
     }
 
