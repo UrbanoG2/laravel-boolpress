@@ -98,7 +98,7 @@ class CategoryController extends Controller
 
             return redirect()
                 ->route('admin.categories.index')
-                ->with('status', "The category $category->title is been removed!");
+                ->with('status', "The category ' $category->name ' is been removed!");
         }
     }
 }
