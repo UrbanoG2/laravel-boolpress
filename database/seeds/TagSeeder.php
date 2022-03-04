@@ -19,6 +19,12 @@ class TagSeeder extends Seeder
             "#lifestyle",
             "#travelblogger",
             "#trmaunto",
+            "#landscapes",
+            "#sunset",
+            "#foodporn",
+            "#staystrong",
+            "#young&foolish",
+            "#inToTheWild"
         ];
 
         foreach ($tags as $tag) {

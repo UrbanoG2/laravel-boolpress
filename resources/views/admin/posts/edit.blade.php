@@ -19,16 +19,49 @@
           l'attributo selected --}}
           <option value="">Select a category</option>
 
-              @foreach ($categories as $category)
+            @foreach ($categories as $category)
              
-              <option @if (old('category_id') == $category->id) selected @endif value="{{ $category->id }}"> 
-              {{ $category->name }}</option>
-          @endforeach
+                <option @if (old('category_id', $post->category_id) == $category->id) selected @endif value="{{ $category->id }}"> 
+                {{ $category->name }} - {{ $category->id }}
+                </option>
+            @endforeach
         </select>
+
+        @error('tags.*')
+            <div class="alert alert-danger mt-3">
+                {{ $message }}
+            </div>
+        @enderror
+          <fieldset class="mb-3">
+              <legend>Tags</legend>
+              {{-- teniamo la selezione "VECCHIA" della checkbox --}}
+              @if ($errors->any())
+                  @foreach ($tags as $tag)
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                            {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                        <label class="form-check-label" for="flexCheckDefault">
+                            {{ $tag->name }}
+                        </label>
+                    </div>
+                  @endforeach
+              @else
+                  {{-- Altrimenti facciamo un check "automatico" prendendo i dati direttamente dal db --}}
+                  @foreach ($tags as $tag)
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                            {{ $post->tags()->get()->contains($tag->id)? 'checked': '' }}>
+                        <label class="form-check-label" for="flexCheckDefault">
+                            {{ $tag->name }}
+                        </label>
+                    </div>
+                  @endforeach   
+              @endif
+          </fieldset>
 
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
-          <input type="text" class="form-control" id="title" name="title">
+          <input type="text" class="form-control" id="title" name="title" value="{{ old("title", $post->title) }}">
 
           @error('title')
             <div class="alert alert-danger">{{ $message }}</div>
@@ -38,7 +71,7 @@
 
         <div class="mb-3">
             <label for="author" class="form-label">Author</label>
-            <input type="text" class="form-control" id="author" name="author">
+            <input type="text" class="form-control" id="author" name="author" value="{{ old("author", $post->author) }}">
   
             @error('author')
               <div class="alert alert-danger">{{ $message }}</div>
@@ -57,7 +90,7 @@
         
         <div class="mb-3">
           <label for="text" class="form-label">Text</label>
-          <input type="text" class="form-control" id="text" name="text">
+          <input type="text" class="form-control" id="text" name="text" value="{{ old("text", $post->text) }}">
 
           @error('text')
             <div class="alert alert-danger">{{ $message }}</div>

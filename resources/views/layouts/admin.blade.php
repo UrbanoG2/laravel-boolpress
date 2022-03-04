@@ -46,12 +46,12 @@
                                         All Posts
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="nav-link active" aria-current="page" href="{{ route('admin.home') }}">
                                         <i class="bi bi-house"></i>
                                         Dashboard
                                     </a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.categories.index') }}">
                                         <i class="bi bi-files"></i>

@@ -8,6 +8,8 @@ use App\Model\Post;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Model\Category;
+use App\Model\Tag;
+
 
 
 class PostController extends Controller
@@ -18,6 +20,7 @@ class PostController extends Controller
         'title' => 'required|max:50',
         'author' => 'required|max:60',
         'text' => 'required',
+        'tags.*' => 'nullable|exists:App\Model\Tag,id'
     ];
 
     /**
@@ -47,9 +50,9 @@ class PostController extends Controller
     public function create()
     {
         // return view('admin.posts.create', ['title' => 'Create New Post']);
-        
+        $tags = Tag::all();
         $categories = Category::all();
-        return view('admin.posts.create', ['categories' => $categories]);
+        return view('admin.posts.create', ['categories' => $categories, "tags"=> $tags]);
     }
 
     /**
@@ -85,6 +88,10 @@ class PostController extends Controller
         $post->slug = $slug;
         $post->save();
 
+        if (!empty($data['tags'])) {
+            $post->tags()->attach($data['tags']);
+        }
+
 
         return redirect()->route('admin.posts.show', $post->slug);
     }
@@ -110,7 +117,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', ['post'=>$post], ["categories"=>$categories]);
+        $tags = Tag::all();
+        return view('admin.posts.edit', ['post'=>$post, "categories"=>$categories, "tags"=>$tags]);
     }
 
     /**
@@ -125,6 +133,13 @@ class PostController extends Controller
         $validationData = $request->validate($this->validation);
         $data = $request->all();
         $updated = $post->update($data);
+
+
+        if (!empty($data['tags'])) {
+            $post->tags()->sync($data['tags']);
+        } else {
+            $post->tags()->detach();
+        }
 
         return redirect()
         ->route('admin.posts.show', ["post"=>$post])
@@ -143,6 +158,7 @@ class PostController extends Controller
             abort('403');
         }
 
+        $post->tags()->detach();
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('status', "Post id $post->id deleted");
