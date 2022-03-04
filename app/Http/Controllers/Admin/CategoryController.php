@@ -56,14 +56,15 @@ class CategoryController extends Controller
         $validationData = $request->validate($this->validation);
         
 
+
         $slug = Str::slug($data['name'], '-');
-        $categorySlug = Category::where('slug', $slug)->first();
+        $oldCategorySlug = Category::where('slug', $slug)->first();
 
         $counter = 0;
-        while ($categorySlug) {
+        while ($oldCategorySlug) {
 
-            $slug = $slug . '-' . $counter;
-            $categorySlug = Post::where('slug', $slug)->first();
+            $newSlug = $slug . '-' . $counter;
+            $oldCategorySlug = Category::where('slug', $newSlug)->first();
             $counter++;
         }
 

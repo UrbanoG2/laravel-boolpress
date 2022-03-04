@@ -23,6 +23,12 @@ class Post extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany('App\Model\Tag')
+        ->withTimestamps();
+    }
+
 
 
     //link con category
@@ -32,8 +38,7 @@ class Post extends Model
     }
 
     
-    public function getRouteKeyName()
-    {
+    public function getRouteKeyName() {
         return 'slug';
     }
 
