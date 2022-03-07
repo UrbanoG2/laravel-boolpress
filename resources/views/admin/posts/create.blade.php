@@ -9,7 +9,7 @@
   </div>
   <div class="row mt-3">
     <div class="col">
-        <form action="{{ route('admin.posts.store') }}" method="post">
+        <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('POST')
 
@@ -57,6 +57,11 @@
             @error('author')
               <div class="alert alert-danger">{{ $message }}</div>
             @enderror
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Insert image</label>
+          <input class="form-control form-control-sm" id="image" name="image" type="file">
         </div>
 
         {{-- <div class="mb-3">

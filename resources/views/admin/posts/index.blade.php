@@ -6,7 +6,7 @@
         <a href="{{ route('admin.posts.create') }}" class="btn btn-warning">Create new post</a>
     </div>
 </div>
-@endsection --}}
+@endsection --}}    
 
 @extends('layouts.admin')
 
@@ -30,7 +30,6 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Id</th>
                         <th scope="col">Title</th>
                         <th scope="col">Category</th>
                         <th scope="col">Tags</th>
@@ -42,7 +41,6 @@
                 <tbody>
                     @foreach ($posts as $post)
                         <tr>
-                            <td>{{ $post->id }}</td>
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->category()->first()->name }}</td>
 

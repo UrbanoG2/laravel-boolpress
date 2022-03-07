@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\Post;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Model\Category;
 use App\Model\Tag;
 
@@ -20,7 +21,8 @@ class PostController extends Controller
         'title' => 'required|max:50',
         'author' => 'required|max:60',
         'text' => 'required',
-        'tags.*' => 'nullable|exists:App\Model\Tag,id'
+        'tags.*' => 'nullable|exists:App\Model\Tag,id',
+        'image'=>'nullable|image'
     ];
 
     /**
@@ -72,6 +74,15 @@ class PostController extends Controller
         $validationData = $request->validate($this->validation);
         // dd($this->validation);
 
+
+        //creo variabile upload img
+
+        if (!empty($data["image"])) {
+            $image_path = Storage::put("uploads", $data["image"]);
+            $data["image"] = $image_path;
+        }   
+
+
         $slug = Str::slug($data['title'], '-');
         $postPresente = Post::where('slug', $slug)->first();
 
@@ -91,6 +102,9 @@ class PostController extends Controller
         if (!empty($data['tags'])) {
             $post->tags()->attach($data['tags']);
         }
+
+
+       
 
 
         return redirect()->route('admin.posts.show', $post->slug);
@@ -133,6 +147,15 @@ class PostController extends Controller
         $validationData = $request->validate($this->validation);
         $data = $request->all();
         $updated = $post->update($data);
+
+
+         //stesso check dello store
+         if (!empty($data['image'])) {
+            Storage::delete($post->image);
+
+            $img_path = Storage::put('uploads', $data['image']);
+            $post->image = $img_path;
+        }
 
 
         if (!empty($data['tags'])) {

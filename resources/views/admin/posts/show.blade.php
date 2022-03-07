@@ -9,15 +9,16 @@
             <li>Author: {{ $post->author }}</li>
             <li>Desription: {{ $post->text }}</li>
             <li>Category: {{ $post->category()->first()->name }}</li>
-            <li>Tag: 
-                <ul>
-                    @foreach ($post->tags()->get() as $tag)
-                        <li>{{ $tag->name }}</li>
+            <li>Tag: @foreach ($post->tags()->get() as $tag)
+                        {{$tag->name }}
                     @endforeach    
-                </ul>
             </li>
 
         </ul>
+
+        <div class="col">
+            <img class="img-fluid" src="{{ asset("storage/" . $post->image) }}" alt="{{ $post->title }}">
+        </div>
 
 
         <div class="buttons d-flex">
