@@ -9,7 +9,7 @@
   </div>
   <div class="row mt-3">
     <div class="col">
-        <form action="{{ route('admin.posts.update', $post) }}" method="post">
+        <form action="{{ route('admin.posts.update', $post) }}" method="post" enctype="multipart/form-data" >
         @csrf
         @method('PATCH')
 
@@ -84,6 +84,7 @@
                     alt="{{ $post->title }}">
             </div>
         @endif
+
         <div class="mb-3">
             <label for="image" class="form-label">Image</label>
             <input class="form-control" type="file" id="image" name="image">

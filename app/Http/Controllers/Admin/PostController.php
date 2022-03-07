@@ -104,9 +104,6 @@ class PostController extends Controller
         }
 
 
-       
-
-
         return redirect()->route('admin.posts.show', $post->slug);
     }
 
@@ -146,16 +143,18 @@ class PostController extends Controller
     {
         $validationData = $request->validate($this->validation);
         $data = $request->all();
-        $updated = $post->update($data);
 
 
          //stesso check dello store
-         if (!empty($data['image'])) {
+        if (!empty($data['image'])) {
             Storage::delete($post->image);
 
-            $img_path = Storage::put('uploads', $data['image']);
-            $post->image = $img_path;
+            $image_path = Storage::put('uploads', $data['image']);
+            $data["image"] = $image_path;
         }
+
+
+        $post->update($data);
 
 
         if (!empty($data['tags'])) {
