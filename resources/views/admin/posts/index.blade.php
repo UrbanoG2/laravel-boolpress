@@ -78,7 +78,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="8">{{ $posts->links() }}</td>
+                        {{-- <td colspan="8">{{ $posts->links() }}</td> --}}
                     </tr>
                 </tfoot>
             </table>
