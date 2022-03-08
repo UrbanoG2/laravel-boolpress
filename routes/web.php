@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome')->name("guest.index");
-});
+// Route::get('/', function () {
+//     return view('guest.welcome')->name("guest.index");
+// });
 
 Auth::routes();
 
@@ -31,5 +31,10 @@ Route::middleware("auth")
         Route::resource('categories', 'CategoryController');
         Route::resource('posts', 'PostController');
     });
+
+
+Route::get("{any?}", function () {
+    return view("guest.welcome");
+    })->where("any", ".*")->name("guest.index");
 
 

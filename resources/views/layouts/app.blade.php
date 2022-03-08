@@ -9,8 +9,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    @yield("script")
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -24,7 +23,7 @@
     @include('partials.header')
 
     
-    <div id="app">
+    {{-- <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -78,11 +77,16 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> --}}
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
-</body>
+    {{-- </div> --}}
+
+
+        <div id="app">
+            <main class="py-4">
+                @yield('content')
+            </main>
+        </div>
+
+    </body>
 </html>
