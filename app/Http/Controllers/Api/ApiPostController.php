@@ -15,10 +15,10 @@ class ApiPostController extends Controller
      */
     public function index()
     {
-        $posts =  Post::paginate(4);
+        $posts =  Post::paginate(12);
         return response()->json([
-            "response"=> true,
-            "results"=> $posts,
+            "response" => true,
+            "results" => $posts,
         ]);
     }
 
@@ -86,5 +86,15 @@ class ApiPostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function inRandomOrder()
+    {
+        $posts = Post::inRandomOrder()->limit(5)->get();
+        return response()->json([
+            "response" => true,
+            "results" => ["data" => $posts],
+        ]);
     }
 }

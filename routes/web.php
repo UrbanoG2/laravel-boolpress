@@ -20,10 +20,10 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::middleware("auth")
-    -> namespace ("Admin")
-    -> name ("admin.")
-    -> prefix ("admin")
-    -> group (function() {
+    ->namespace("Admin")
+    ->name("admin.")
+    ->prefix("admin")
+    ->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
         // Route::get('/categories', 'CategoryController@index')->name('categories.index');
         // Route::get('/categories/{category}', 'CategoryController@show')->name('categories.show');
@@ -35,6 +35,4 @@ Route::middleware("auth")
 
 Route::get("{any?}", function () {
     return view("guest.welcome");
-    })->where("any", ".*")->name("guest.index");
-
-
+})->where("any", ".*")->name("guest.index");
