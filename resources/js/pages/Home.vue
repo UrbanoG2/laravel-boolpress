@@ -1,8 +1,8 @@
 <template>
   <div>
-      Home
+      Questo è il contenuto della home
 
-      <Main :cards="cards" @changepage="changepage($event)"></Main>
+      <Main :cards="cards" @changePage="changePage($event)"></Main>
   </div>
 </template>
 
@@ -14,6 +14,7 @@ import Main from '../components/Main.vue';
 
 export default {
   name:"Home",
+
   components: {
     Main
   },
@@ -44,7 +45,7 @@ export default {
       getPosts(url){
           Axios.get(url).then(
             (result) => {
-              console.log(result)
+              // console.log(result)
               this.cards.posts = result.data.results.data;
               this.cards.next_page_url = result.data.results.next_page_url;
               this.cards.prev_page_url = result.data.results.prev_page_url;
