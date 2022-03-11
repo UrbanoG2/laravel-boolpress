@@ -21,4 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('v1/posts', 'Api\ApiPostController@index');
 Route::get('v1/posts/random', 'Api\ApiPostController@inRandomOrder');
 
-Route::get('v1/posts/{id}', 'Api\ApiPostController@show');
+Route::get('v1/posts/{id}', 'Api\ApiPostController@show')->middleware("api.auth");
+
+Route::post('v1/contacts', 'Api\ContactController@send')->middleware("api.auth");

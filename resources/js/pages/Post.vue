@@ -11,7 +11,6 @@
             </div>
 
             <router-link class="btn btn-warning" :to="{name: 'home'}">Home</router-link>
-            
             <router-link class="btn btn-danger" :to="{name: 'posts'}">All posts</router-link>
         </div>
         
@@ -27,7 +26,7 @@ export default {
   props:["id"],
     data(){
         return {
-            post:null,
+            post:[],
         }
     },
 
@@ -38,8 +37,8 @@ export default {
 
   methods: {
       getPost(url) {
-          Axios.get(url).then(
-              (result) => {
+          Axios.get(url, {headers: {"Authorization": "Bearer zdfghdf654dg654dgsr"}})
+          .then((result) => {
                   this.post = result.data.results.data;
               }
           )
